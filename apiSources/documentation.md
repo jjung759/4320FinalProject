@@ -13,3 +13,6 @@
 #### We may also wish to employ alternate news api's, these could be individual sources (NYtimes, WaPo, etc.), although that could get messy depending on if one was querying multiple sources at once(although not necessarily)
 #### Additionally, there may be alternate news aggregate API's we can employ
 #### At the very least, no matter what API's we employ, it's important that they provide article links, for searching and archiving purposes.
+* #### [nytimes article search](https://developer.nytimes.com/article_search_v2.json#/README)
+* #### [Google news api(another aggregate system)](https://newsapi.org/s/google-news-api)
+* #### [List of sources available through newsapi](https://newsapi.org/sources)
