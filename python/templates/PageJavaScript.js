@@ -1,5 +1,11 @@
 var oldHeight = 14;
 var isEnlarged = false;
+function loadhotline(Source){
+	var xmlhttp;
+	var url = "/" +"hotline";
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send();
+}
 function enlarge() {
     if (!isEnlarged) {
         var toEnlarge = document.getElementById("headertop");
