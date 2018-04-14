@@ -20,19 +20,16 @@ class News:
 
 apikey = newsapi_client.NewsApiClient(api_key='c6ad02b14a8e4089a9f0bbc6f44c2d6c')
 request_news=News()
+top_headlines = apikey.get_top_headlines(q='trump',sources='CNN',language='en')
+
+
+print(top_headlines)
+
+print(top_headlines['articles'][0])
+print(type(top_headlines['articles'][0]))
 # interact with frontend
 #  get the latest news to display (sports, movie,etc)
-'''
-app = Flask(__name__)
 
-url = server address
-@app.route(url,methods=['get'])
-def latestnews():
-    return ''
-
-if __name__ == '__main__':
-    app.run()
-'''
 
 
 
