@@ -20,11 +20,11 @@ class News:
 
 apikey = newsapi_client.NewsApiClient(api_key='c6ad02b14a8e4089a9f0bbc6f44c2d6c')
 request_news=News()
-top_headlines = apikey.get_top_headlines(q='trump',
-                                          sources='bbc-news,the-verge',
-                                          language='en'
-                                          )
+top_headlines = apikey.get_top_headlines(q='trump',sources='CNN',language='en')
+
+
 print(top_headlines)
+
 print(top_headlines['articles'][0])
 print(type(top_headlines['articles'][0]))
 # interact with frontend
