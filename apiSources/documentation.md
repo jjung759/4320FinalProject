@@ -16,3 +16,19 @@
 * #### [nytimes article search](https://developer.nytimes.com/article_search_v2.json#/README)
 * #### [Google news api(another aggregate system)](https://newsapi.org/s/google-news-api)
 * #### [List of sources available through newsapi](https://newsapi.org/sources)
+
+##### Sources we will be using from list
+
+1. New York Times (the-new-york-times)
+2. BBC News (bbc-news)
+3. CCN (ccn)
+4. Fox News (fox-news)
+5. Washington Post (the-washington-post)
+6. Wall Street Journal (the-wallstreet-journal)
+7. NBC News (nbc-news)
+8. ESPN (espn)
+9. CBS News (cbs-news)
+10. ABC News (abc-news)
+
+  * These can all be queried using the python api listed above.
+  * the string in parentheses is the source parameter
