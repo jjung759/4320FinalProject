@@ -1,3 +1,5 @@
 i think after we enter the topic in the search bar the app should jump to another page where searching result are listed.
 
 i imagine that using a search button to trigger this action and another button for backing to index page. 
+
+besides, i have made some adaptation in the index.html file ,but it still need some work to change the "words size" and other attribute to a proper level to make it look good
