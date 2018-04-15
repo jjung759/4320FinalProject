@@ -1,0 +1,3 @@
+i think after we enter the topic in the search bar the app should jump to another page where searching result are listed.
+
+i imagine that using a search button to trigger this action and another button for backing to index page. 
