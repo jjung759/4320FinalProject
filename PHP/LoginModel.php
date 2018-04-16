@@ -37,6 +37,7 @@
       $email = $data['email'];
       $username = $data['username'];
       $password = $data['password'];
+      $confirmPassword = $data['confirmPassword'];
 
       // Error Checking for Database
 			if (!$firstname) {
@@ -57,6 +58,11 @@
       }
       if (!$password) {
         $this->error = "No password found. A password is required.";
+        return $this->error;
+      }
+
+      if($password != $confirmPassword){
+        $this->error= "The passwords do not match.";
         return $this->error;
       }
 
@@ -111,6 +117,9 @@
       if (! $result = $this->mysqli->query($sql)) {
 				$this->error = $this->mysqli->error;
 			}
+      else {
+        print "Login Successful";
+      }
     }
 
   }

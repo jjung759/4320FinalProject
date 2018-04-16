@@ -19,11 +19,13 @@
 				$body .= "<p class='message'>$message</p>\n";
 			}
 
-      $body .= "<p style='text-align: right'><a class='buttons' href='index.php?view=addAccount'>Create Account</a></p>\n"; //Create account button
       $body .= "<form style='width:300px' id='login' action='index.php' method = 'post'";
       $body .= "<p>Username<br /><input type='text' name='username' value='$username' placeholder='Enter Username' maxlength='255' size='40' required></p>";
       $body .= "<p>Password<br /><input type='password' name='password' value='$password' placeholder='Enter Password' maxlength='255' size='40' required></p>";
       $body .= "<input type='submit' value='Login'></form>";
+      $body .= "<form><p style='font-size: 12px'>New to our site?";
+      $body .= "<a class='buttons' href='index.php?view=addAccount'>Create Account</a></p></form>\n"; //Create account button
+
 
       return $this->page($body);
     }
@@ -35,6 +37,7 @@
       $email= '';
       $username = '';
       $password = '';
+      $confirmPassword = '';
       if ($data) {
         $firstname = $data['firstname'];
         $middlename = $data['middlename'] ? $data['middlename'] : '';
@@ -42,6 +45,7 @@
         $email = $data['email'];
         $username= $data['username'];
         $password = $data['password'];
+        $confirmPassword = $data['confirmPassword'];
       }
 
       $body = <<<EOT1
@@ -59,8 +63,7 @@ EOT1;
         $body .= "<p class='message'>$message</p>\n";
       }
 
-      $body .= "<div style='text-align:right'><a class='buttons' href='index.php?view=loginView'>Sign in</a></div>";
-      $body .= "<form style='width: 300px' action='index.php' method='post'>";
+      $body .= "<form action='index.php' method='post'>";
       $body .= "<input type='hidden' name='action' value='addAccount' />";
 
       $body .= <<<EOT2
@@ -76,8 +79,11 @@ EOT1;
     <input type="text" name="username" value="$username" placeholder="Enter Username" maxlength="255" size="40" required></p>
     <p>Password<br />
     <input type="password" name="password" value="$password" placeholder="Enter Password" maxlength="255" size="40" required></p>
+    <p>Confirm Password<br />
+    <input type="password" name="confirmPassword" value="$confirmPassword" placeholder="Confirm Password" maxlength="255" size="40" required></p>
     <input type="submit" name='submit' value="Submit"> <input type="reset" name='reset' value="Reset">
     </form>
+    <form><p style='font-size:12px'>Already have an account?<a class='buttons' href='index.php?view=loginView'>Sign in</a></p></form>
     </body>
     </html>
 EOT2;

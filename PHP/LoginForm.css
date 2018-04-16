@@ -24,23 +24,19 @@ td {
 a.buttons:link, a.buttons:visited, a.buttons:active {
 	color: black;
 	font-size: 12px;
-	text-decoration: none;
-	background-color: #D3D3D3;
 	padding: 5px;
-	margin: 25px 25px 25px 25px;
-	border: 1px solid black;
-}
-
-a.buttons:hover {
-	background-color: #C3C3C3;
 }
 
 form {
 	text-align: center;
+	align: center;
 	margin: 0 auto;
+	margin-bottom: 25px;
+	margin-top: 25px;
+	width: 300px;
 	background-color: #D8D8D8;
 	border: 1px solid black;
-	padding: 5px;
+	padding: 10px;
 }
 
 p.message {
