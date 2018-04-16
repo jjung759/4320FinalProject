@@ -23,6 +23,7 @@
   			$this->views = null;
       }
 
+      //Determines which view is going to display
       public function run() {
   			if ($error = $this->model->getError()) {
   				print $views->errorView($error);
@@ -30,7 +31,7 @@
   			}
 
         switch($this->action) {
-          case 'login':
+          case 'login': //does not work yet
             $this->handleLogin();
             break;
           case 'addAccount':
@@ -53,6 +54,7 @@
         }
       }
 
+      //Not yet functioning
       private function handleLogin(){
         if($_POST['cancel']){
   				$this->view = 'loginView';
@@ -81,5 +83,4 @@
   			}
   		}
     }
-
 ?>

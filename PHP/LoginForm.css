@@ -1,6 +1,11 @@
 body {
 	margin: 10px;
-	background-color: #82CAFA;
+	background-color: #AED6F1;
+	font-family: arial;
+}
+
+h1 {
+	text-align: center;
 	font-family: arial;
 }
 
@@ -16,20 +21,23 @@ td {
 	background-color: #fff;
 }
 
-a.addAccount:link, a.addAccount:visited, a.addAccount:active {
+a.buttons:link, a.buttons:visited, a.buttons:active {
 	color: black;
-	font-size: 16px;
+	font-size: 12px;
 	text-decoration: none;
-	background-color: #D8D8D8;
+	background-color: #D3D3D3;
 	padding: 5px;
+	margin: 25px 25px 25px 25px;
 	border: 1px solid black;
 }
 
-a.addAccount:hover {
-	background-color: #C8C8C8;
+a.buttons:hover {
+	background-color: #C3C3C3;
 }
 
 form {
+	text-align: center;
+	margin: 0 auto;
 	background-color: #D8D8D8;
 	border: 1px solid black;
 	padding: 5px;

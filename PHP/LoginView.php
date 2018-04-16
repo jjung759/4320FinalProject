@@ -19,8 +19,8 @@
 				$body .= "<p class='message'>$message</p>\n";
 			}
 
-      $body .= "<p><a class='addAccount' href='index.php?view=addAccount'>+ Create Account</a></p>\n";
-      $body .= "<form id = 'login' action = 'index.php' method = 'post'";
+      $body .= "<p style='text-align: right'><a class='buttons' href='index.php?view=addAccount'>Create Account</a></p>\n"; //Create account button
+      $body .= "<form style='width:300px' id='login' action='index.php' method = 'post'";
       $body .= "<p>Username<br /><input type='text' name='username' value='$username' placeholder='Enter Username' maxlength='255' size='40' required></p>";
       $body .= "<p>Password<br /><input type='password' name='password' value='$password' placeholder='Enter Password' maxlength='255' size='40' required></p>";
       $body .= "<input type='submit' value='Login'></form>";
@@ -59,14 +59,9 @@ EOT1;
         $body .= "<p class='message'>$message</p>\n";
       }
 
-      $body .= "<form action='index.php' method='post'>";
-
-      if ($data['username']) {
-        // $body .= "<input type='hidden' name='action' value='updateClient' />";
-        // $body .= "<input type='hidden' name='clientId' value='{$data['id']}' />";
-      } else {
-        $body .= "<input type='hidden' name='action' value='addAccount' />";
-      }
+      $body .= "<div style='text-align:right'><a class='buttons' href='index.php?view=loginView'>Sign in</a></div>";
+      $body .= "<form style='width: 300px' action='index.php' method='post'>";
+      $body .= "<input type='hidden' name='action' value='addAccount' />";
 
       $body .= <<<EOT2
     <p>First Name<br />
@@ -81,7 +76,7 @@ EOT1;
     <input type="text" name="username" value="$username" placeholder="Enter Username" maxlength="255" size="40" required></p>
     <p>Password<br />
     <input type="password" name="password" value="$password" placeholder="Enter Password" maxlength="255" size="40" required></p>
-    <input type="submit" name='submit' value="Submit"> <input type="submit" name='cancel' value="Cancel">
+    <input type="submit" name='submit' value="Submit"> <input type="reset" name='reset' value="Reset">
     </form>
     </body>
     </html>

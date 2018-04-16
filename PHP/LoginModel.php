@@ -19,6 +19,7 @@
       return $this->error;
     }
 
+    //Establish connection to the database. Using the required document to store database info (Servername, username, password, database name)
     private function initDatabaseConnection() {
       require('db_connection.php');
       $this->mysqli = new mysqli($servername, $username, $password, $dbname);
@@ -31,7 +32,7 @@
 			$this->error = '';
 
       $firstname = $data['firstname'];
-      $middlename = ($data['middlename']) ? $data['middlename'] : '';
+      $middlename = ($data['middlename']) ? $data['middlename'] : ''; //Middlename is optional
       $lastname = $data['lastname'];
       $email = $data['email'];
       $username = $data['username'];
@@ -59,6 +60,7 @@
         return $this->error;
       }
 
+      //Escaped values for database insert
       $firstnameEscaped = $this->mysqli->real_escape_string($firstname);
  			$middlenameEscaped = $this->mysqli->real_escape_string($middlename);
  			$lastnameEscaped = $this->mysqli->real_escape_string($lastname);
@@ -67,6 +69,7 @@
       $passwordEscaped = $this->mysqli->real_escape_string($password);
       $passwordHashed = password_hash($passwordEscaped, PASSWORD_BCRYPT);
 
+      //Inserts new account into the database, with hashed password
 			$sql = "INSERT INTO Customer (firstname, middlename, lastname, email, username, passwordHash) VALUES ('$firstnameEscaped', '$middlenameEscaped', '$lastnameEscaped', '$emailEscaped', '$usernameEscaped', '$passwordHashed')";
 
 			if (! $result = $this->mysqli->query($sql)) {
@@ -76,6 +79,8 @@
     	return $this->error;
     }
 
+
+    //Not yet funcitonal
     public function login(){
         if(!$_POST('username')){
           $this->HandleError("Username is empty.");
@@ -98,6 +103,7 @@
         return true;
     }
 
+    //Not yet functional
     public function verifyInDb($username = '', $password = ''){
       $passwordVerify = password_verify($password, $passwordHashed);
       $sql = "Select name, email from customer ".
