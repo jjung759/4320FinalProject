@@ -20,9 +20,10 @@
 			}
 
       $body .= "<p><a class='addAccount' href='index.php?view=addAccount'>+ Create Account</a></p>\n";
+      $body .= "<form id = 'login' action = 'index.php' method = 'post'";
       $body .= "<p>Username<br /><input type='text' name='username' value='$username' placeholder='Enter Username' maxlength='255' size='40' required></p>";
       $body .= "<p>Password<br /><input type='password' name='password' value='$password' placeholder='Enter Password' maxlength='255' size='40' required></p>";
-      $body .= "<input type='submit' value='Login'>";
+      $body .= "<input type='submit' value='Login'></form>";
 
       return $this->page($body);
     }

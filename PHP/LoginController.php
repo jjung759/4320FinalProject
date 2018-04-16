@@ -30,6 +30,9 @@
   			}
 
         switch($this->action) {
+          case 'login':
+            $this->handleLogin();
+            break;
           case 'addAccount':
             $this->handleAddAccount();
             break;
@@ -47,6 +50,20 @@
             }
             print $this->views->loginView($this->message);
             break;
+        }
+      }
+
+      private function handleLogin(){
+        if($_POST['cancel']){
+  				$this->view = 'loginView';
+  				return;
+  			}
+
+        $error = $this->model->login($_POST);
+  			if($error) {
+  				$this->message = $error;
+  				$this->view = 'loginView';
+  				$this->data = $_POST;
         }
       }
 

@@ -75,5 +75,37 @@
 
     	return $this->error;
     }
+
+    public function login(){
+        if(!$_POST('username')){
+          $this->HandleError("Username is empty.");
+          return false;
+        }
+
+        if(!$_POST('password')){
+          $this->HandleError("Password is empty.");
+          return false;
+        }
+
+        $username = $this->mysqli->real_escape_string($_POST['username']);
+        $password = $this->mysqli->real_escape_string($_POST['password']);
+
+        if(!$this->verifyInDB($username, $password)){
+          return false;
+        }
+
+        $_SESSION[$this->GetLoginSessionVar()] = $username;
+        return true;
+    }
+
+    public function verifyInDb($username = '', $password = ''){
+      $passwordVerify = password_verify($password, $passwordHashed);
+      $sql = "Select name, email from customer ".
+        " where username='$username' and password='$passwordVerify' ";
+      if (! $result = $this->mysqli->query($sql)) {
+				$this->error = $this->mysqli->error;
+			}
+    }
+
   }
 ?>
