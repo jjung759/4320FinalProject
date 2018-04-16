@@ -65,9 +65,9 @@
       $emailEscaped = $this->mysqli->real_escape_string($email);
       $usernameEscaped = $this->mysqli->real_escape_string($username);
       $passwordEscaped = $this->mysqli->real_escape_string($password);
-      $passwordHashed = $this->mysqli->password_hash($passwordEscaped);
+      $passwordHashed = password_hash($passwordEscaped, PASSWORD_BCRYPT);
 
-			$sql = "INSERT INTO Client (firstname, middlename, lastname, nickname, gender, ssn, birthDate) VALUES ('$firstnameEscaped', '$middlenameEscaped', '$lastnameEscaped', '$emailEscaped', '$usernameEscaped', '$passwordHashed')";
+			$sql = "INSERT INTO Customer (firstname, middlename, lastname, email, username, passwordHash) VALUES ('$firstnameEscaped', '$middlenameEscaped', '$lastnameEscaped', '$emailEscaped', '$usernameEscaped', '$passwordHashed')";
 
 			if (! $result = $this->mysqli->query($sql)) {
 				$this->error = $this->mysqli->error;

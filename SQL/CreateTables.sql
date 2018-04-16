@@ -6,8 +6,8 @@ CREATE TABLE Customer(
     `firstname` varchar(255) NOT NULL,
     `middlename` varchar(255),
     `lastname` varchar(255) NOT NULL,
-    `email` varchar(255) NOT NULL,
-    `username` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL UNIQUE,
+    `username` varchar(255) NOT NULL UNIQUE,
     `passwordHash` BINARY(64) NOT NULL
 );
 

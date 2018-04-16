@@ -22,10 +22,7 @@
       $body .= "<p><a class='addAccount' href='index.php?view=addAccount'>+ Create Account</a></p>\n";
       $body .= "<p>Username<br /><input type='text' name='username' value='$username' placeholder='Enter Username' maxlength='255' size='40' required></p>";
       $body .= "<p>Password<br /><input type='password' name='password' value='$password' placeholder='Enter Password' maxlength='255' size='40' required></p>";
-
-      $body .= "<tr>";
-      $body .= "<th><form action='index.php' method='post'><input type='hidden' name='action' value='loginView'/>";
-      $body .= "</tr>\n";
+      $body .= "<input type='submit' value='Login'>";
 
       return $this->page($body);
     }
@@ -63,7 +60,7 @@ EOT1;
 
       $body .= "<form action='index.php' method='post'>";
 
-      if ($data['id']) {
+      if ($data['username']) {
         // $body .= "<input type='hidden' name='action' value='updateClient' />";
         // $body .= "<input type='hidden' name='clientId' value='{$data['id']}' />";
       } else {
@@ -93,7 +90,7 @@ EOT2;
     }
 
     public function errorView($message) {
-      $body = "<h1>Clients</h1>\n";
+      $body = "<h1>Login</h1>\n";
       $body .= "<p>$message</p>\n";
 
       return $this->page($body);
@@ -112,6 +109,7 @@ EOT2;
       </body>
       </html>
 EOT;
+      return $html;
     }
   }
 ?>
