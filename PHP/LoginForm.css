@@ -1,0 +1,42 @@
+body {
+	margin: 10px;
+	background-color: #82CAFA;
+	font-family: arial;
+}
+
+th, td {
+	padding: 4px;
+}
+
+th {
+	background-color: #D8D8D8;
+}
+
+td {
+	background-color: #fff;
+}
+
+a.addAccount:link, a.addAccount:visited, a.addAccount:active {
+	color: black;
+	font-size: 16px;
+	text-decoration: none;
+	background-color: #D8D8D8;
+	padding: 5px;
+	border: 1px solid black;
+}
+
+a.addAccount:hover {
+	background-color: #C8C8C8;
+}
+
+form {
+	background-color: #D8D8D8;
+	border: 1px solid black;
+	padding: 5px;
+}
+
+p.message {
+	color: red;
+	padding: 4px;
+	border: 1px solid red;
+}
