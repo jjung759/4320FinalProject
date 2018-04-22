@@ -2,28 +2,14 @@ body {
     font-family: arial;
 }
 
-.mydiv {
-    margin: 0 auto;
-    border: 1px solid black;
-    width: 50%;
-    height: 80%;
-}
-
 .noDisplay {
     display: none;
 }
 
-div.centeredBoxes {
-    text-align: center;
-    top: 15px;
-    position: relative;
-    /*border: 1px solid pink;*/
-}
-
 #headertop {
     border: 1px solid black;
-    width: 55%;
-    height: 17%;
+    width: 70%;
+    height: 60%;
     text-align: center;
     transition: height 300ms;
     margin: 0 auto;
@@ -71,4 +57,47 @@ form.searchForm::after {
     position: relative;
     top: 30px;
     margin: 0 auto;
+}
+
+.dropdown-check-list {
+    display: inline-block;
+    border: 1px solid black;
+}
+
+.dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    /* If we really need this */
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+.dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+}
+.dropdown-check-list ul.items {
+    padding: 2px;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+.dropdown-check-list ul.items li {
+    list-style: none;
 }
