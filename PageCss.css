@@ -2,6 +2,10 @@ body {
     font-family: arial;
 }
 
+form {
+    border: 3px solid #f1f1f1;
+}
+
 .noDisplay {
     display: none;
 }
@@ -100,4 +104,24 @@ form.searchForm::after {
 }
 .dropdown-check-list ul.items li {
     list-style: none;
+}
+
+/* Full-width inputs for login and register forms */
+form.container input[type=text], form.container input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.container {
+    margin: auto;
+    padding: 16px;
+}
+
+/* Add space between input boxes */
+.container input {
+    padding: 5px;
 }
