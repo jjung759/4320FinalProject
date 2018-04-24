@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>News Application</title>
     <!-- Add links here -->
-    <script src="jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="PageCss.css">
+    <script src="{{url_for('static', filename='scripts/jquery-3.3.1.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PageCss.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
             <form class="searchForm" id="searchBar">
                 <input type="text" placeholder="Search...">
                 <!-- May have to be changed to type submit -->
-                
+
                 <button type="button" onclick="enlarge()"><i class="fa fa-search"></i></button>
                 <div id="sourcelist" class="dropdown-check-list" tabindex="100">
                     <span class="anchor">Display From Sources...</span>
@@ -47,7 +47,7 @@
         </div>
 
     <!-- If this script is not down here, then certain elements cannot be found. Unlucky -->
-    <script src="PageJavaScript.js"></script>
+    <script src="{{url_for('static', filename='scripts/PageJavaScript.js')}}"></script>
 
 
     <!-- </div>-->
