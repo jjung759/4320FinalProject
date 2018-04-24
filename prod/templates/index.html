@@ -49,8 +49,15 @@
     <!-- If this script is not down here, then certain elements cannot be found. Unlucky -->
     <script src="{{url_for('static', filename='scripts/PageJavaScript.js')}}"></script>
 
-
-    <!-- </div>-->
+    <div id="headlines">
+        <ul>
+            <span title="CNN"><a href='{{CNN.url|safe}}'>{{CNN.title|safe}}</a></span>
+            <br>
+            <span title="Time"><a href='{{Time.url|safe}}'>{{Time.title|safe}}</a></span>
+            <br>
+            <span title="Fox"><a href='{{FOX.url|safe}}'>{{FOX.title|safe}}</a></span>
+        </ul>
+    </div>
 
 </body>
 </html>

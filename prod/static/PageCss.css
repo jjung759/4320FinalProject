@@ -6,6 +6,16 @@ body {
     display: none;
 }
 
+#headlines{
+  background-color: red;
+  color: white;
+  height: 5em;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+
 #headertop {
     border: 1px solid black;
     width: 70%;
@@ -100,4 +110,15 @@ form.searchForm::after {
 }
 .dropdown-check-list ul.items li {
     list-style: none;
+}
+
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: white;
+  size: 16px;
+}
+
+a:hover {
+  color: pink;
+  text-decoration: underline;
 }
