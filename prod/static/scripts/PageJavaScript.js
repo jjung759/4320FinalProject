@@ -1,5 +1,7 @@
-var oldHeight = 14;
+var oldHeight = 20;
 var isEnlarged = false;
+var checkList = document.getElementById('sourcelist');
+var items = document.getElementById('items');
 function enlarge() {
     if (!isEnlarged) {
         var toEnlarge = document.getElementById("headertop");
@@ -50,3 +52,18 @@ function hideMaterial() {
     }
 }
 
+checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+    if (items.classList.contains('visible')){
+        items.classList.remove('visible');
+        items.style.display = "none";
+    }
+            
+    else {
+        items.classList.add('visible');
+        items.style.display = "block";
+    }           
+}
+
+items.onblur = function(evt) {
+    items.classList.remove('visible');
+}
