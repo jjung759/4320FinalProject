@@ -1,0 +1,124 @@
+body {
+    font-family: arial;
+}
+
+.noDisplay {
+    display: none;
+}
+
+#headlines{
+  background-color: red;
+  color: white;
+  height: 5em;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+
+#headertop {
+    border: 1px solid black;
+    width: 70%;
+    height: 60%;
+    text-align: center;
+    transition: height 300ms;
+    margin: 0 auto;
+}
+
+form.searchForm input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid black;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+form.searchForm button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 20px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form.searchForm button:hover {
+    background: #0b7dda;
+}
+
+form.searchForm::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#searchBar {
+    margin: auto;
+    max-width: 300px;
+}
+
+#article-selection {
+    position: relative;
+    top: 30px;
+    margin: 0 auto;
+}
+
+.dropdown-check-list {
+    display: inline-block;
+    border: 1px solid black;
+}
+
+.dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    /* If we really need this */
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+.dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+}
+.dropdown-check-list ul.items {
+    padding: 2px;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+.dropdown-check-list ul.items li {
+    list-style: none;
+}
+
+a:link, a:visited, a:active {
+  text-decoration: none;
+  color: white;
+  size: 16px;
+}
+
+a:hover {
+  color: pink;
+  text-decoration: underline;
+}
