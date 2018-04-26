@@ -4,6 +4,7 @@ from flask import request
 from wtforms import Form, StringField, SelectField
 from newsapi import newsapi_client
 from news    import News
+import datetime
 import json
 global apikey
 # precisely searching for particular news
@@ -11,13 +12,6 @@ apikey = newsapi_client.NewsApiClient(api_key='c6ad02b14a8e4089a9f0bbc6f44c2d6c'
 
 def _json(stat):
     return json.dumps(stat)
-
-
-class searchnews(Form):
-    select = SelectField('Search...')
-    search = StringField('')
-
-
 
 app = Flask(__name__)
 
@@ -34,12 +28,30 @@ def index_page():
     CNN=CNN['articles'][0]
     return render_template('index.html',BBC=BBC,FOX=FOX,Time=time,CNN=CNN)
 
-@app.route('/hotline',methods=['GET'])
-def hotlines():
-    BBC=apikey.get_top_headlines(q='trump',sources='bbc-news,the-verge',language='en')
-    news=BBC['articles'][0]
-    news=json.dumps(news)
-    return news
+@app.route('/searching',methods=['POST', 'GET'])
+def search():
+    topic=request.args.get('contain',0,type=str)
+    source='Time'
+    begin=datetime.datetime.now()
+    end=datetime.datetime(year=begin.year,month=begin.month,day=begin.day+4)
+    if(source=='Time'):
+        _domains = "http://www.bbc.co.uk/news"
+        everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
+                                       to=end.date(), language='English', sort_by='relevancy', page=3)
+    elif (source=='BBC'):
+        _domains="http://www.bbc.co.uk/news"
+        everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
+                                           to=end.date(), language='English', sort_by='relevancy', page=3)
+    elif (source=='CNN'):
+        _domains="http://us.cnn.com"
+        everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
+                                           to=end.date(), language='English', sort_by='relevancy', page=3)
+    else :
+        _domains="http://www.foxnews.com"
+        everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
+                                           to=end.date(), language='English', sort_by='relevancy', page=3)
+
+    return render_template('index1.html.html')
 
 
 #    return render_template('index.html',form=_topic)
