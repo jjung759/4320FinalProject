@@ -14,7 +14,7 @@
     <!--<div class="myDiv">-->
         <div id="headertop">
             <form class="searchForm" id="searchBar">
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search..." name=contain>
                 <!-- May have to be changed to type submit -->
                 <button type="button" onclick="enlarge()"><i class="fa fa-search"></i></button>
             </form>
@@ -38,25 +38,16 @@
         </div>
 <script type="text/javascript">
 $(function() {
-	$('button').click(function() {
-		$.ajax({
-			url: '/hotline',
-			dataType: 'json'
-			type: 'GET',
-			success: function(data)
-			{
-				$("#BBC").json(data)
-			},
-			error: function(error)
-			{
-				console.log(error);
-			}
-		});
-	});
-});
+			  $('id#news').bind('click', function() {
+				$.getJSON('/searching', {
+				  contain: $('input[name="contain"]').val(),
+				}, function(data) {
+				  $("#result").text(data.result);
+				});
+				return false;
+			  });
+			});
 </script>
-
-
     <!-- </div>-->
 </body>
 </html>
