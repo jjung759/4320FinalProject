@@ -125,3 +125,20 @@ form.container input[type=text], form.container input[type=password] {
 .container input {
     padding: 5px;
 }
+
+.favorites-list {
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid black;
+    width: 50%;
+    height: 90%;
+    text-align: center;
+    font-family: Lato, arial, sans-serif;
+}
+
+#favorite-link {
+    position: relative;
+    top: 2;
+    right: 2;
+    border: 1px solid black;
+}
