@@ -1,5 +1,5 @@
 import urllib
-import time
+import datetime
 import requests
 from flask import Flask
 from newsapi import newsapi_client
@@ -16,14 +16,16 @@ class News:
 
     def Sources(self,_category,_language,_country):
         sources = apikey.get_sources(category=_category,language=_language,country=_country)
+        return sources
+
+    def keyword(self,input):
+        key=
+
         return
 
 apikey = newsapi_client.NewsApiClient(api_key='c6ad02b14a8e4089a9f0bbc6f44c2d6c')
 request_news=News()
 top_headlines = apikey.get_top_headlines(q='trump',sources='CNN',language='en')
-
-
-print(top_headlines)
 
 print(top_headlines['articles'][0])
 print(type(top_headlines['articles'][0]))
