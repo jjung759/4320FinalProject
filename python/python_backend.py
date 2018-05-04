@@ -13,20 +13,46 @@ apikey = newsapi_client.NewsApiClient(api_key='c6ad02b14a8e4089a9f0bbc6f44c2d6c'
 def _json(stat):
     return json.dumps(stat)
 
+
+
 app = Flask(__name__)
 
 
+class search_item(Form):
+    keyword=StringField('searchBar')
+
+@app.route('/login', methods=['GET', 'POST'])
+def test():
+
+
+    return render_template('login.html')
+
 @app.route('/', methods=['GET', 'POST'])
 def index_page():
-    BBC = apikey.get_top_headlines(q='trump', sources='bbc-news,the-verge', language='en')
-    BBC=BBC['articles'][0]
-    FOX = apikey.get_top_headlines(q='trump', sources='Fox-news ', language='en')
-    FOX=FOX['articles'][0]
-    time=apikey.get_top_headlines(q='trump',sources='Time', language='en')
-    time=time['articles'][0]
-    CNN=apikey.get_top_headlines(q='trump', sources='CNN', language='en')
-    CNN=CNN['articles'][0]
-    return render_template('index.html',BBC=BBC,FOX=FOX,Time=time,CNN=CNN)
+    form=search_item()
+    t=form.keyword.data
+    print(t)
+    ABC = News.Hotlines(News,'trump','abc-news','en')
+   # ABC = ABC['articles'][0]
+    BBC =  News.Hotlines(News,'trump','bbc-news,the-verge','en')
+    #BBC=BBC['articles'][0]
+    CBS =  News.Hotlines(News,'trump', 'cbs-news', 'en')
+    #CBS = CBS['articles'][0]
+    CNN= News.Hotlines(News,'trump', 'CNN', 'en')
+    #CNN=CNN['articles'][0]
+    ESPN = News.Hotlines(News,'trump', 'espn', 'en')
+    #ESPN = ESPN['articles'][0]
+    FOX =  News.Hotlines(News,'trump', 'fox-news', 'en')
+    #FOX=  FOX['articles'][0]
+    NBC = News.Hotlines(News,'trump', 'nbc-news', 'en')
+    #NBC = NBC['articles'][0]
+    NYM = News.Hotlines(News,'trump', 'new-york-magazine', 'en')
+    #NYM = NYM['articles'][0]
+    WSJ = News.Hotlines(News,'trump', 'the-wall-street-journal','en')
+    #WSJ = WSJ['articles'][0]
+    TIME= News.Hotlines(News,'trump','Time','en')
+    #TIME=TIME['articles'][0]
+    return render_template('index.html',ABC=ABC,BBC=BBC,CBS=CBS,CNN=CNN,ESPN=ESPN,FOX=FOX,NBC=NBC,NYM=NYM,WSJ=WSJ,TIME=TIME,)
 
 @app.route('/searching',methods=['POST', 'GET'])
 def search():
@@ -35,7 +61,7 @@ def search():
     begin=datetime.datetime.now()
     end=datetime.datetime(year=begin.year,month=begin.month,day=begin.day+4)
     if(source=='Time'):
-        _domains = "http://www.bbc.co.uk/news"
+        _domains = "http://www.time.com"
         everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
                                        to=end.date(), language='English', sort_by='relevancy', page=3)
     elif (source=='BBC'):
@@ -51,11 +77,9 @@ def search():
         everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
                                            to=end.date(), language='English', sort_by='relevancy', page=3)
 
-    return render_template('index1.html.html')
-
-
+    return render_template('index.html.html')
 #    return render_template('index.html',form=_topic)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
