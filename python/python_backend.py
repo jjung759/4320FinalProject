@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-from flask import request
+from flask import request,redirect
 from wtforms import Form, StringField, SelectField
 from newsapi import newsapi_client
 from news    import News
@@ -21,17 +21,23 @@ app = Flask(__name__)
 class search_item(Form):
     keyword=StringField('searchBar')
 
+
+@app.route('/test', methods=['GET', 'POST'])
+def a():
+
+
+    return redirect('login')
+
 @app.route('/login', methods=['GET', 'POST'])
 def test():
-
 
     return render_template('login.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def index_page():
-    form=search_item()
-    t=form.keyword.data
-    print(t)
+    #form=search_item()
+    #t=form.keyword.data
+    #print(t,"hellp")
     ABC = News.Hotlines(News,'trump','abc-news','en')
    # ABC = ABC['articles'][0]
     BBC =  News.Hotlines(News,'trump','bbc-news,the-verge','en')
@@ -52,19 +58,26 @@ def index_page():
     #WSJ = WSJ['articles'][0]
     TIME= News.Hotlines(News,'trump','Time','en')
     #TIME=TIME['articles'][0]
-    return render_template('index.html',ABC=ABC,BBC=BBC,CBS=CBS,CNN=CNN,ESPN=ESPN,FOX=FOX,NBC=NBC,NYM=NYM,WSJ=WSJ,TIME=TIME,)
+    return render_template('index.html',ABC=ABC,BBC=BBC,CBS=CBS,CNN=CNN,ESPN=ESPN,FOX=FOX,NBC=NBC,NYM=NYM,WSJ=WSJ,TIME=TIME)
 
 @app.route('/searching',methods=['POST', 'GET'])
 def search():
     topic=request.args.get('contain',0,type=str)
-    source='Time'
+    print(topic)
+    source='BBC'
     begin=datetime.datetime.now()
     end=datetime.datetime(year=begin.year,month=begin.month,day=begin.day+4)
+    begin=datetime.datetime(year=begin.year-1,month=begin.month,day=begin.day)
     if(source=='Time'):
+        default_topic='Trump'
+        topic=default_topic
         _domains = "http://www.time.com"
+        print(begin.date(),end.date(),topic,source,_domains)
         everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
                                        to=end.date(), language='English', sort_by='relevancy', page=3)
     elif (source=='BBC'):
+        default_topic = 'Trump'
+        topic = default_topic
         _domains="http://www.bbc.co.uk/news"
         everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
                                            to=end.date(), language='English', sort_by='relevancy', page=3)
@@ -76,8 +89,8 @@ def search():
         _domains="http://www.foxnews.com"
         everything = apikey.get_everything(q=topic, sources=source, domains=_domains, from_parameter=begin.date(),
                                            to=end.date(), language='English', sort_by='relevancy', page=3)
-
-    return render_template('index.html.html')
+    print(everything)
+    return render_template('searching.html',NEWS=everything)
 #    return render_template('index.html',form=_topic)
 
 

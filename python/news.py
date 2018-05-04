@@ -25,8 +25,10 @@ class News:
 apikey = newsapi_client.NewsApiClient(api_key='c6ad02b14a8e4089a9f0bbc6f44c2d6c')
 request_news=News()
 top_headlines = News.Hotlines(News,'trump','espn','en')
+everything = apikey.get_everything(q='trump', sources='bbc-news', domains='bbc.co.uk,techcrunch.com', from_parameter='2017-05-04',
+                                       to='2018-05-08', language='en', sort_by='relevancy', page=3)
 print(top_headlines)
-
+print(everything)
 # interact with frontend
 #  get the latest news to display (sports, movie,etc)
 
