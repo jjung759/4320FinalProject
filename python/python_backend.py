@@ -22,14 +22,15 @@ class search_item(Form):
     keyword=StringField('searchBar')
 
 
-@app.route('/test', methods=['GET', 'POST'])
-def a():
+@app.route('/favorites', methods=['GET', 'POST'])
+def favorite():
 
 
-    return redirect('login')
+    return render_template('favorites.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
 
     return render_template('login.html')
 
@@ -62,7 +63,7 @@ def index_page():
 
 @app.route('/searching',methods=['POST', 'GET'])
 def search():
-    topic=request.args.get('contain',0,type=str)
+    topic=request.form
     print(topic)
     source='BBC'
     begin=datetime.datetime.now()
