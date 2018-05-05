@@ -29,7 +29,7 @@ def a():
     return redirect('login')
 
 @app.route('/login', methods=['GET', 'POST'])
-def test():
+def login():
 
     return render_template('login.html')
 

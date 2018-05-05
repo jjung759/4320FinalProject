@@ -67,3 +67,17 @@ checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
 items.onblur = function(evt) {
     items.classList.remove('visible');
 }
+
+// Testing function and boolean
+var toggle = false;
+function toggleNews() {
+    for (i = 1; i <= 10; i++) {
+        var text = document.getElementById("text"+i);
+        if (!toggle) text.style.display = "block";
+        else if (toggle) text.style.display = "none";
+    }
+    if (!toggle) document.getElementById("login-message-fav").style.display = "none";
+    else if (toggle) document.getElementById("login-message-fav").style.display = "block";
+    toggle = !toggle;
+}
+
