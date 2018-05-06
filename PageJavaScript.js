@@ -142,7 +142,6 @@ function passwordRequirements(){
 function confirmPassword() {
     var password = document.getElementById("newPassword");
     var passwordConfirm = document.getElementById("passwordConfirm");
-    console.log("password: " + password.value + "\npasswordConfirm: " + passwordConfirm.value);
     if(password.value != passwordConfirm.value){
         //document.getElementById("passwordNotMatchMessage").classList.remove("noDisplay");
         document.getElementById("passwordNotMatchMessage").style.display = "block";
