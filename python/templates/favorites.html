@@ -1,0 +1,43 @@
+<!DOCTYPE HTML5>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Your favorites</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="PageCss.css">
+</head>
+<body>
+    
+    <!-- Not sure how to check if logged in or not via python(?) serverside -->
+    <div class="favorites-list" id="favorites-list">        
+        <!-- The backend code will probably add elements to this div. I'm not sure how python flask stuff works. -->
+        <span>Your favorites are listed here.</span> <br> <br>
+        
+        <!-- If not logged in, something like this: -->
+        <span id="login-message-fav"><a href="login.html">Log in or create an account</a> to view your favorites.</span>
+    
+        <!-- Button to toggle what it might look like -->
+        <br> <button type="button" onclick="toggleNews()">click me to toggle if i am logged in or not</button>
+        
+        <!-- If logged in, these are placeholders from the index.html -->    
+        <p id="text1" class="noDisplay">Display a ABC News article!</p>
+        <p id="text2" class="noDisplay">Display a BBC News article!</p>
+        <p id="text3" class="noDisplay">Display a CBS article!</p>
+        <p id="text4" class="noDisplay">Display a CNN article!</p>
+        <p id="text5" class="noDisplay">Display a ESPN article!</p>
+        <p id="text6" class="noDisplay">Display a Fox News article!</p>
+        <p id="text7" class="noDisplay">Display a NBC News article!</p>
+        <p id="text8" class="noDisplay">Display a New York Times article!</p>
+        <p id="text9" class="noDisplay">Display a Wall Street Journal article!</p>
+        <p id="text10" class="noDisplay">Display a Washington Post article!</p>
+        
+        <br><br><br>
+        <a href="{{ url_for('index_page') }}">Return to Main Page</a>
+        
+    </div>
+    
+     <script ype=text/javascript src="{{ url_for('static', filename='PageJavaScript.js') }}"></script>
+    
+</body>
+</html>

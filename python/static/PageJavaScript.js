@@ -1,26 +1,7 @@
-var oldHeight = 14;
+var oldHeight = 20;
 var isEnlarged = false;
-function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-        json = JSON.stringify(json, undefined, 2);
-    }
-    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
-        }
-        return '<span class="' + cls + '">' + match + '</span>';
-    });
-}
+var checkList = document.getElementById('sourcelist');
+var items = document.getElementById('items');
 function enlarge() {
     if (!isEnlarged) {
         var toEnlarge = document.getElementById("headertop");
@@ -47,6 +28,7 @@ function toggleSelected(number) {
     if (chk.checked == true && isEnlarged) {
         // If just checked true
         document.getElementById("text"+number).style.display = "block";
+
     } else {
         // if just checked false
         document.getElementById("text"+number).style.display = "none";
@@ -55,7 +37,7 @@ function toggleSelected(number) {
 
 function displayMaterial() {
     var i;
-    for (i = 1; i <= 4; i++) {
+    for (i = 1; i <= 10; i++) {
         var chk = document.getElementById("check"+i);
         var chkText = document.getElementById("text"+i);
         if (chk.checked == true) chkText.style.display = "block";
@@ -65,7 +47,37 @@ function displayMaterial() {
 
 function hideMaterial() {
     var i;
-    for (i = 1; i <= 4; i++) {
+    for (i = 1; i <= 10; i++) {
         document.getElementById("text"+i).style.display = "none";
     }
 }
+
+checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+    if (items.classList.contains('visible')){
+        items.classList.remove('visible');
+        items.style.display = "none";
+    }
+
+    else {
+        items.classList.add('visible');
+        items.style.display = "block";
+    }
+}
+
+items.onblur = function(evt) {
+    items.classList.remove('visible');
+}
+
+// Testing function and boolean
+var toggle = false;
+function toggleNews() {
+    for (i = 1; i <= 10; i++) {
+        var text = document.getElementById("text"+i);
+        if (!toggle) text.style.display = "block";
+        else if (toggle) text.style.display = "none";
+    }
+    if (!toggle) document.getElementById("login-message-fav").style.display = "none";
+    else if (toggle) document.getElementById("login-message-fav").style.display = "block";
+    toggle = !toggle;
+}
+

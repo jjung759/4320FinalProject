@@ -1,0 +1,144 @@
+body {
+    font-family: arial;
+}
+
+form {
+    border: 3px solid #f1f1f1;
+}
+
+.noDisplay {
+    display: none;
+}
+
+#headertop {
+    border: 1px solid black;
+    width: 70%;
+    height: 60%;
+    text-align: center;
+    transition: height 300ms;
+    margin: 0 auto;
+}
+
+form.searchForm input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid black;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+form.searchForm button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 20px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form.searchForm button:hover {
+    background: #0b7dda;
+}
+
+form.searchForm::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#searchBar {
+    margin: auto;
+    max-width: 300px;
+}
+
+#article-selection {
+    position: relative;
+    top: 30px;
+    margin: 0 auto;
+}
+
+.dropdown-check-list {
+    display: inline-block;
+    border: 1px solid black;
+}
+
+.dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    /* If we really need this */
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+.dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+}
+.dropdown-check-list ul.items {
+    padding: 2px;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+.dropdown-check-list ul.items li {
+    list-style: none;
+}
+
+/* Full-width inputs for login and register forms */
+form.container input[type=text], form.container input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.container {
+    margin: auto;
+    padding: 16px;
+}
+
+/* Add space between input boxes */
+.container input {
+    padding: 5px;
+}
+
+.favorites-list {
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid black;
+    width: 50%;
+    height: 90%;
+    text-align: center;
+    font-family: Lato, arial, sans-serif;
+}
+
+#favorite-link {
+    position: relative;
+    top: 2;
+    right: 2;
+    border: 1px solid black;
+}

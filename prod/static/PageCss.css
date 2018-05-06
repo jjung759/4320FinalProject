@@ -17,7 +17,6 @@ body {
 
 
 #headertop {
-    border: 1px solid black;
     width: 70%;
     height: 60%;
     text-align: center;
@@ -112,13 +111,17 @@ form.searchForm::after {
     list-style: none;
 }
 
-a:link, a:visited, a:active {
+#headline, #headline:visited, #headline:active {
   text-decoration: none;
   color: white;
   size: 16px;
 }
 
-a:hover {
+#headline:hover {
   color: pink;
   text-decoration: underline;
+}
+
+a:link {
+  color: black
 }
