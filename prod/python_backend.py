@@ -50,7 +50,7 @@ def search():
     print(searchData)
     # print(searchData)
     if not searchData.get('queryString'): ##Checks to see if a query was entered.
-        return(render_template('index.html'))
+        return(render_template('emptySearch.html'))
     query = request.form['queryString']
     print(query)
     ### The following block indexes source collection
@@ -77,7 +77,6 @@ def search():
         selectedSources.append("the-wall-street-journal")
     if len(selectedSources) == 0: ## case where no sources selected
         newsItems = apikey.get_everything(q=str(query), language='en', sort_by='relevancy')
-        ##print(len(newsItems['articles'])) ## the amount of articles returned by our query
         articleListing = newsItems['articles']
         return(render_template('search.html', results=articleListing))
     else:
