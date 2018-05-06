@@ -5,7 +5,7 @@ from mysql.connector import errorcode
 config = {
   'host':'newsappproject.mysql.database.azure.com',
   'user':'cs4320@newsappproject',
-  'password':'doremi!123',
+  'password':'password',
   'database':'test',
   'port':'3306'
 }

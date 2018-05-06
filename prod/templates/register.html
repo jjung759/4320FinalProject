@@ -1,0 +1,26 @@
+<!DOCTYPE HTML5>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <!-- Add links here -->
+    <script src="jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="PageCss.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<form id="registerForm" method="post" action="{{url_for('register')}}">
+    <div id="registerDiv" class="container">
+        <label for="username"><b>Username: </b></label>
+        <input type="text" id="username" placeholder="Enter Username" name="username" required>
+        <br>
+        <label for="password"><b>Password</b></label>
+        <input type="password" id="password" name="password" placeholder="Enter Password" required>
+        <br>
+        <label for="username"><b>Confirm Password</b></label>
+        <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Re-enter Password" required>
+    </div>
+    <button type="submit">Register</button>
+</form>
+<a href="{{url_for('index_page')}}">Return to Main Page</a>
+</body>
+</html>

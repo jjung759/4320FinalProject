@@ -1,0 +1,33 @@
+.pieceOfNews{
+  height: 15%;
+  background-color: #f4f6f9;
+  width: 100%;
+  margin-bottom: 1%;
+
+}
+
+#itemDetailList{
+  list-style-type: none;
+}
+
+.articleDescript{
+  font-size: 16px;
+  color: black;
+  width: 50%;
+}
+
+.urlImage{
+  height: 125px;
+  width: 125px;
+  padding-left: 75%;
+}
+
+#articleLink:link, #articleLink:visited, #articleLink:active{
+  text-decoration: none;
+  color: red;
+  size: 6em;
+}
+
+#articleLink:hover{
+  color: pink;
+}
