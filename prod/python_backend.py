@@ -26,15 +26,16 @@ app._static_folder = os.path.abspath("static")
 
 @app.route('/', methods=['GET', 'POST'])
 def index_page():
-    BBC = apikey.get_top_headlines(q='trump', sources='bbc-news,the-verge', language='en')
-    BBC=BBC['articles'][0]
+    # BBC = apikey.get_top_headlines(q='trump', sources='bbc-news,the-verge', language='en')
+    # BBC=BBC['articles'][0]
     FOX = apikey.get_top_headlines(q='trump', sources='Fox-news ', language='en')
     FOX=FOX['articles'][0]
     time=apikey.get_top_headlines(q='trump',sources='Time', language='en')
     time=time['articles'][0]
     CNN=apikey.get_top_headlines(q='trump', sources='CNN', language='en')
     CNN=CNN['articles'][0]
-    return render_template('index.html',BBC=BBC,FOX=FOX,Time=time,CNN=CNN)
+    # return render_template('index.html',BBC=BBC,FOX=FOX,Time=time,CNN=CNN)
+    return render_template('index.html', FOX=FOX, Time=time, CNN=CNN)
 
 @app.route('/hotline',methods=['GET'])
 def hotlines():
@@ -43,9 +44,57 @@ def hotlines():
     news=json.dumps(news)
     return news
 
+@app.route('/search', methods=['POST'])
+def search():
+    searchData = request.form
+    print(searchData)
+    # print(searchData)
+    if not searchData.get('queryString'): ##Checks to see if a query was entered.
+        print("Sad")
+        return(render_template('hello.html'))
+    query = request.form['queryString']
+    print(query)
+    ### The following block indexes source collection
+    selectedSources = []
+    if searchData.get('WAPO'):
+        selectedSources.append("the-washington-post")
+    if searchData.get('BBC'):
+        selectedSources.append("bbc-news")
+    if searchData.get('ABC'):
+        selectedSources.append("abc-news")
+    if searchData.get('CBS'):
+        selectedSources.append("cbs-news")
+    if searchData.get('CNN'):
+        selectedSources.append("cnn")
+    if searchData.get('ESPN'):
+        selectedSources.append("espn")
+    if searchData.get('FOX'):
+        selectedSources.append("fox-news")
+    if searchData.get('NBC'):
+        selectedSources.append("nbc-news")
+    if searchData.get('NYT'):
+        selectedSources.append("the-new-york-times")
+    if searchData.get('WSJ'):
+        selectedSources.append("the-wall-street-journal")
+    if len(selectedSources) == 0: ## case where no sources selected
+        newsItems = apikey.get_everything(q=str(query), language='en', sort_by='relevancy')
+        ##print(len(newsItems['articles'])) ## the amount of articles returned by our query
+        articleListing = newsItems['articles']
+        return(render_template('search.html', results=articleListing))
+    else:
+        sourcesStr = ""
+        if len(selectedSources) > 1:
+            x = len(selectedSources)
+            finalIndex = x - 1
+            for i in range(len(selectedSources)-1):
+                sourcesStr = sourcesStr + selectedSources[i] + ","
+            sourcesStr = sourcesStr + selectedSources[finalIndex]
+            newsItems = apikey.get_everything(q=str(query), sources=str(sourcesStr), language='en', sort_by='relevancy')
+            articleListing = newsItems['articles']
+            return(render_template('search.html', results=articleListing)) ## Initially just testing to see what gets rendered on form submit atm:
+
 
 #    return render_template('index.html',form=_topic)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
