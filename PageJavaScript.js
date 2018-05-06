@@ -1,4 +1,4 @@
-/*var oldHeight = 20;
+var oldHeight = 20;
 var isEnlarged = false;
 var checkList = document.getElementById('sourcelist');
 var items = document.getElementById('items');
@@ -79,7 +79,7 @@ function toggleNews() {
     if (!toggle) document.getElementById("login-message-fav").style.display = "none";
     else if (toggle) document.getElementById("login-message-fav").style.display = "block";
     toggle = !toggle;
-}*/
+}
 
 /* annoying to me. can use if desired.
 // When the user clicks on the password field, show the newPasswordRequirements box
