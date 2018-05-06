@@ -11,7 +11,7 @@
 </head>
 <body>
     <!-- Unsure about action.. will need to link to python somehow -->
-    <form action="login" id="loginForm">
+    <form action="login" id="loginForm" method="post" action="{{url_for('handleLogin')}}">
         <div id="loginDiv" class="container">
             <label for="username"><b>Username: </b></label>
             <input type="text" id="username" placeholder="Enter Username" required>
@@ -24,8 +24,8 @@
         <button type="submit">Login</button>
     </form>
 
-    <a href="register.html">Register</a>
-    <a href="index.html">Return to Main Page</a>
+    <a href="{{url_for('register_page')}}">Register</a>
+    <a href="{{url_for('index_page')}}">Return to Main Page</a>
 
 </body>
 </html>

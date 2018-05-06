@@ -144,8 +144,7 @@ form.container input[type=text], form.container input[type=password] {
 }
 
 /* The message box is shown when the user clicks on the password field */
-#message {
-    display:none;
+#newPasswordRequirements, #passwordNotMatchMessage {
     background: #f1f1f1;
     color: #000;
     position: relative;
@@ -153,7 +152,7 @@ form.container input[type=text], form.container input[type=password] {
     margin-top: 10px;
 }
 
-#message p {
+#newPasswordRequirements p {
     padding: 10px 35px;
     font-size: 18px;
 }

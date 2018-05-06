@@ -10,14 +10,14 @@
 </head>
 <body>
     <!-- Unsure about action.. will need to link to python somehow -->
-    <form action="register" method="post" id="registerForm">
+    <form id="registerForm" method="post" action="{{url_for('register')}}">
         <div id="registerDiv" class="container">
             <label for="username"><b>Username: </b></label>
             <input type="text" id="username" placeholder="Enter Username" required>
             <br>
 
             <label for="password"><b>Password</b></label>
-            <input type="password" id="newPassword" placeholder="Enter Password" required>
+            <input type="password" id="newPassword" placeholder="Enter Password" onkeyup="passwordRequirements()" required>
             <div id="newPasswordRequirements">
                 <h3>Password must contain the following:</h3>
                 <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
@@ -28,13 +28,14 @@
             <br>
 
             <label for="username"><b>Confirm Password</b></label>
-            <input type="password" id="passwordConfirm" placeholder="Re-enter Password" required>
+            <input type="password" id="passwordConfirm" placeholder="Re-enter Password" onfocusout="confirmPassword()" required>
+            <h3 id="passwordNotMatchMessage" class="noDisplay">The entered passwords do not match<h3>
         </div>
 
-        <button type="submit">Register</button>
+        <button type="submit" id="registerSubmit" disabled>Register</button>
     </form>
 
-    <a href="index.html">Return to Main Page</a>
+    <a href="{{url_for('index_page')}}">Return to Main Page</a>
     <script src="PageJavaScript.js"></script>
 </body>
 </html>
