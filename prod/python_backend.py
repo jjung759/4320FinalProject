@@ -4,6 +4,8 @@ from flask import request
 from wtforms import Form, StringField, SelectField
 from newsapi import newsapi_client
 from news    import News
+from werkzeug.security import generate_password_hash
+import mysql.connector as db
 import os
 import json
 global apikey
@@ -21,20 +23,24 @@ class searchnews(Form):
 
 
 app = Flask(__name__)
-# app._static_folder = os.path.abspath("static/PageCss.css")
 app._static_folder = os.path.abspath("static")
+
+@app.route('/loginPage')
+def showLogin():
+    return(render_template('login.html'))
+
+@app.route('/registerPage')
+def showRegister():
+    return(render_template('register.html'))
 
 @app.route('/', methods=['GET', 'POST'])
 def index_page():
-    # BBC = apikey.get_top_headlines(q='trump', sources='bbc-news,the-verge', language='en')
-    # BBC=BBC['articles'][0]
     FOX = apikey.get_top_headlines(q='trump', sources='Fox-news ', language='en')
     FOX=FOX['articles'][0]
     time=apikey.get_top_headlines(q='trump',sources='Time', language='en')
     time=time['articles'][0]
     CNN=apikey.get_top_headlines(q='trump', sources='CNN', language='en')
     CNN=CNN['articles'][0]
-    # return render_template('index.html',BBC=BBC,FOX=FOX,Time=time,CNN=CNN)
     return render_template('index.html', FOX=FOX, Time=time, CNN=CNN)
 
 @app.route('/hotline',methods=['GET'])
@@ -96,6 +102,24 @@ def search():
             return(render_template('search.html', results=articleListing))
 
 #    return render_template('index.html',form=_topic)
+
+@app.route('/connectionTest')
+def testConnect():
+    cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+    if(cnx):
+        print("connected??")
+    cnx.close()
+    return(render_template('emptySearch.html'))
+
+@app.route('/register', methods=['POST'])
+def register():
+    print(request.form)
+    return(render_template('emptySearch.html'))
+
+@app.route('/login', methods=['POST'])
+def handleLogin():
+    print(request.form)
+    return(render_template('emptySearch.html'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
