@@ -25,6 +25,44 @@ class searchnews(Form):
 app = Flask(__name__)
 app._static_folder = os.path.abspath("static")
 
+
+class favoriteItem():
+    def __init__(self, newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title):
+        self.newsSource = newsSource
+        self.userID = userID
+        self.favoriteDate = favoriteDate
+        self.author = author
+        self.descriptions = descriptions
+        self.url = url
+        self.imageURL = imageURL
+        self.title = title
+
+@app.route('/favorites', methods=['GET', 'POST'])
+def favorite():
+
+    # Check if the user is logged in first:
+        # if not logged in, redirect to login page
+        # if logged in, continue
+
+    # connect to the database
+    cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+    cursor = cnx.cursor()
+
+    # empty array of favorites to populate with the query
+    favorites = []
+
+    # Using id of 1 to test
+    query = ("SELECT * FROM favorites WHERE userID = 1")
+
+    cursor.execute(query)
+    for (newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title) in cursor:
+        favorites.append(favoriteItem(newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title))
+        #print ("{}, {} is working! the author is {}.".format(newsSource, userID, author))
+    cursor.close()
+    cnx.close()
+    return render_template('favorites.html', results=favorites)
+
+
 @app.route('/loginPage')
 def showLogin():
     return(render_template('login.html'))
@@ -114,7 +152,20 @@ def testConnect():
 @app.route('/register', methods=['POST'])
 def register():
     print(request.form)
-    return(render_template('emptySearch.html'))
+    regData = request.form
+    username = regData['username']
+    passwordInit = regData['password']
+    passwordHashed = generate_password_hash(passwordInit)
+    add_user = ("INSERT INTO newsUsers " "(username, passwordHashed) " "VALUES (" + "'" +str(username)+"','" + str(passwordHashed)+"')")
+    print(add_user)
+    data_user = (str(username), str(passwordHashed))
+    cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+    cursor = cnx.cursor()
+    cursor.execute(add_user)
+    cnx.commit()
+    cursor.close()
+    cnx.close()
+    return(render_template('login.html'))
 
 @app.route('/login', methods=['POST'])
 def handleLogin():
