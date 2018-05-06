@@ -50,8 +50,7 @@ def search():
     print(searchData)
     # print(searchData)
     if not searchData.get('queryString'): ##Checks to see if a query was entered.
-        print("Sad")
-        return(render_template('hello.html'))
+        return(render_template('index.html'))
     query = request.form['queryString']
     print(query)
     ### The following block indexes source collection
@@ -92,7 +91,10 @@ def search():
             newsItems = apikey.get_everything(q=str(query), sources=str(sourcesStr), language='en', sort_by='relevancy')
             articleListing = newsItems['articles']
             return(render_template('search.html', results=articleListing)) ## Initially just testing to see what gets rendered on form submit atm:
-
+        else:
+            newsItems = apikey.get_everything(q=str(query), sources=str(selectedSources[0]), language='en', sort_by='relevancy')
+            articleListing = newsItems['articles']
+            return(render_template('search.html', results=articleListing))
 
 #    return render_template('index.html',form=_topic)
 
