@@ -142,3 +142,39 @@ form.container input[type=text], form.container input[type=password] {
     right: 2;
     border: 1px solid black;
 }
+
+/* The message box is shown when the user clicks on the password field */
+#newPasswordRequirements, #passwordNotMatchMessage {
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+#newPasswordRequirements p {
+    padding: 10px 35px;
+    font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the password requirements are right */
+.valid {
+    color: green;
+}
+
+.valid:before {
+    position: relative;
+    left: -35px;
+    content: "&#10004;";
+}
+
+/* Add a red text color and an "x" icon when the password requirements are wrong */
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    position: relative;
+    left: -35px;
+    content: "&#10006;";
+}
