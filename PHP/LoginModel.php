@@ -37,7 +37,7 @@
       $email = $data['email'];
       $username = $data['username'];
       $password = $data['password'];
-      $confirmPassword = $data['confirmPassword'];
+      $confirm_password = $data['confirm_password'];
 
       // Error Checking for Database
 			if (!$firstname) {
@@ -61,22 +61,22 @@
         return $this->error;
       }
 
-      if($password != $confirmPassword){
+      if($password != $confirm_password){
         $this->error= "The passwords do not match.";
         return $this->error;
       }
 
       //Escaped values for database insert
-      $firstnameEscaped = $this->mysqli->real_escape_string($firstname);
- 			$middlenameEscaped = $this->mysqli->real_escape_string($middlename);
- 			$lastnameEscaped = $this->mysqli->real_escape_string($lastname);
-      $emailEscaped = $this->mysqli->real_escape_string($email);
-      $usernameEscaped = $this->mysqli->real_escape_string($username);
-      $passwordEscaped = $this->mysqli->real_escape_string($password);
-      $passwordHashed = password_hash($passwordEscaped, PASSWORD_BCRYPT);
+      $firstname_escaped = $this->mysqli->real_escape_string($firstname);
+ 			$middlename_escaped = $this->mysqli->real_escape_string($middlename);
+ 			$lastname_escaped = $this->mysqli->real_escape_string($lastname);
+      $email_escaped = $this->mysqli->real_escape_string($email);
+      $username_escaped = $this->mysqli->real_escape_string($username);
+      $password_escaped = $this->mysqli->real_escape_string($password);
+      $password_hashed = password_hash($password_escaped, PASSWORD_BCRYPT);
 
       //Inserts new account into the database, with hashed password
-			$sql = "INSERT INTO Customer (firstname, middlename, lastname, email, username, passwordHash) VALUES ('$firstnameEscaped', '$middlenameEscaped', '$lastnameEscaped', '$emailEscaped', '$usernameEscaped', '$passwordHashed')";
+			$sql = "INSERT INTO Customer (firstname, middlename, lastname, email, username, passwordHash) VALUES ('$firstname_escaped', '$middlename_escaped', '$lastname_escaped', '$email_escaped', '$username_escaped', '$password_hashed')";
 
 			if (! $result = $this->mysqli->query($sql)) {
 				$this->error = $this->mysqli->error;
@@ -85,42 +85,30 @@
     	return $this->error;
     }
 
-
     //Not yet funcitonal
-    public function login(){
-        if(!$_POST('username')){
-          $this->HandleError("Username is empty.");
-          return false;
-        }
+    public function login($data){
+      $this->error = '';
 
-        if(!$_POST('password')){
-          $this->HandleError("Password is empty.");
-          return false;
-        }
+      $username = $data['username'];
+      $password = $data['password'];
 
-        $username = $this->mysqli->real_escape_string($_POST['username']);
-        $password = $this->mysqli->real_escape_string($_POST['password']);
+      if (!$username) {
+        $this->error = "No username found. A username is required.";
+        return $this->error;
+      }
+      if (!$password) {
+        $this->error = "No password found. A password is required.";
+        return $this->error;
+      }
 
-        if(!$this->verifyInDB($username, $password)){
-          return false;
-        }
-
-        $_SESSION[$this->GetLoginSessionVar()] = $username;
-        return true;
-    }
-
-    //Not yet functional
-    public function verifyInDb($username = '', $password = ''){
-      $passwordVerify = password_verify($password, $passwordHashed);
-      $sql = "Select name, email from customer ".
-        " where username='$username' and password='$passwordVerify' ";
+      $username_escaped = $this->mysqli->real_escape_string($username);
+      $password_escaped = $this->mysqli->real_escape_string($username);
+      // $password_verify = password_verify($password_escaped, $password_hashed);
+      $sql = "SELECT name, email FROM Customer WHERE username='$username' AND password='$password_escaped'";
       if (! $result = $this->mysqli->query($sql)) {
 				$this->error = $this->mysqli->error;
 			}
-      else {
-        print "Login Successful";
-      }
+      else print "Login successful.";
     }
-
   }
 ?>
