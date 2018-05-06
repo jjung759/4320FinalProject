@@ -1,0 +1,44 @@
+<!DOCTYPE HTML5>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Your favorites</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PageCss.css')}}"></head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='search.css')}}">
+
+    <!-- Bootstrap elements for unfavoriting, use in display of articles too
+https://getbootstrap.com/docs/3.3/components/#glyphicons-examples
+-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<body>
+
+    <!-- Not sure how to check if logged in or not via python(?) serverside -->
+    <span>Your favorites are listed here. </span> <br> <a href="{{url_for('index_page')}}">Return to main</a> <br>
+
+    <!-- If not logged in, something like this: -->
+    <span id="login-message-fav"><a href="{{url_for('showLogin')}}">Log in or create an account</a> to view your favorites.</span>
+
+    {% for item in results %}
+   <div class="pieceOfNews">
+     <ul id="itemDetailList">
+       <li><a id="articleLink" href="{{ item.url|safe }}">{{item.title|safe}}</a></li>
+       <div class="articleDescript"> {{item.descriptions}} </div>
+       <li>Source: {{item.newsSource}}</li>
+       <li>Author: {{item.author}}</li>
+       {%- if item.urlToImage -%}
+       <img class="urlImage" src="{{item.urlToImage|safe}}"></img>
+       {% endif %}
+       <button type="button" class="btn btn-default">
+           <span class="glyphicon glyphicon-remove">
+       </button>
+     </ul>
+   </div>
+   {% endfor %}
+
+<script src="{{url_for('static', filename='scripts/PageJavaScript.js')}}"></script>
+
+</body>
+</html>
