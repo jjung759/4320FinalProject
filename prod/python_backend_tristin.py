@@ -69,10 +69,10 @@ def unfavorite():
     #Database connection
     cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
     cursor = cnx.cursor()
-     
+
     # url = request.form['link']
 
-    query = ("DELETE FROM favorites WHERE url=url")
+    query = ("DELETE FROM favorites WHERE url='https://www.google.com'")
 
     cursor.execute(query)
     # This will need to be uncommented eventually but I am going to leave it out for now so I dont have to re add the favorite entry each time
