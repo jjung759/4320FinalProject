@@ -1,0 +1,74 @@
+<!DOCTYPE HTML5>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>News Application</title>
+    <script src="{{url_for('static', filename='scripts/jquery-3.3.1.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PageCss.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      ul.nav{
+        text-align: center;
+      }
+      ul.nav li{
+        display: inline-block;
+      }
+    </style>
+</head>
+<body>
+    <div id="header">
+      <ul class="nav">
+        <li><a href="{{url_for('showLogin')}}">Login</a></li>
+        <li><a href="{{url_for('showRegister')}}">Register</a></li>
+        <li><a href="{{url_for('favorite')}}">Favorites</a></li>
+        <li><a href="{{url_for('logout')}}">Logout</a></li>
+    </div>
+        <div id="headertop">
+            <form class="searchForm" id="searchBar" method="post" action="{{ url_for('search') }}">
+                <input type="text" placeholder="Search..." name="queryString">
+                <button type="submit" onclick="enlarge()"><i class="fa fa-search"></i></button>
+                <div id="sourcelist" class="dropdown-check-list" tabindex="100">
+                    <span class="anchor">Display From Sources...</span>
+                    <ul id="items" class="items">
+                        <li><input type="checkbox" id="check1" name="ABC"  onclick="toggleSelected(1)"/>ABC News</li>
+                        <li><input type="checkbox" id="check2" name="BBC" onclick="toggleSelected(2)"/>BBC News</li>
+                        <li><input type="checkbox" id="check3" name="CBS" onclick="toggleSelected(3)"/>CBS News</li>
+                        <li><input type="checkbox" id="check4" name="CNN" onclick="toggleSelected(4)"/>CNN News</li>
+                        <li><input type="checkbox" id="check5" name="ESPN" onclick="toggleSelected(5)"/>ESPN News</li>
+                        <li><input type="checkbox" id="check6" name="FOX" onclick="toggleSelected(6)"/>FOX News</li>
+                        <li><input type="checkbox" id="check7" name="NBC" onclick="toggleSelected(7)"/>NBC News</li>
+                        <li><input type="checkbox" id="check8" name="NYT" onclick="toggleSelected(8)"/>New York Times</li>
+                        <li><input type="checkbox" id="check9" name="WSJ" onclick="toggleSelected(9)"/>Wall Street Journal</li>
+                        <li><input type="checkbox" id="check10" name="WAPO" onclick="toggleSelected(10)"/>Washington Post</li>
+                    </ul>
+                </div>
+            </form>
+            <div id="article-selection">
+                <p id="text1" class="noDisplay">Display a ABC News article!</p>
+                <p id="text2" class="noDisplay">Display a BBC News article!</p>
+                <p id="text3" class="noDisplay">Display a CBS article!</p>
+                <p id="text4" class="noDisplay">Display a CNN article!</p>
+                <p id="text5" class="noDisplay">Display a ESPN article!</p>
+                <p id="text6" class="noDisplay">Display a Fox News article!</p>
+                <p id="text7" class="noDisplay">Display a NBC News article!</p>
+                <p id="text8" class="noDisplay">Display a New York Times article!</p>
+                <p id="text9" class="noDisplay">Display a Wall Street Journal article!</p>
+                <p id="text10" class="noDisplay">Display a Washington Post article!</p>
+            </div>
+        </div>
+
+    <!-- If this script is not down here, then certain elements cannot be found. Unlucky -->
+    <script src="{{url_for('static', filename='scripts/PageJavaScript.js')}}"></script>
+
+    <div id="headlines">
+        <ul>
+            <span title="CNN"><a id="headline" href='{{CNN.url|safe}}'>{{CNN.title|safe}}</a></span>
+            <br>
+            <span title="Time"><a id="headline" href='{{Time.url|safe}}'>{{Time.title|safe}}</a></span>
+            <br>
+            <span title="Fox"><a id="headline" href='{{FOX.url|safe}}'>{{FOX.title|safe}}</a></span>
+        </ul>
+    </div>
+
+</body>
+</html>

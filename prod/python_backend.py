@@ -1,14 +1,17 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import session
+from flask import redirect, url_for
 from wtforms import Form, StringField, SelectField
 from newsapi import newsapi_client
 from news    import News
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash,  check_password_hash
 import mysql.connector as db
 import os
 import json
 global apikey
+import hashlib
 # precisely searching for particular news
 apikey = newsapi_client.NewsApiClient(api_key='c6ad02b14a8e4089a9f0bbc6f44c2d6c')
 
@@ -24,6 +27,8 @@ class searchnews(Form):
 
 app = Flask(__name__)
 app._static_folder = os.path.abspath("static")
+app.secret_key = "RZ23UL2KwY69"
+
 
 
 class favoriteItem():
@@ -79,7 +84,22 @@ def index_page():
     time=time['articles'][0]
     CNN=apikey.get_top_headlines(q='trump', sources='CNN', language='en')
     CNN=CNN['articles'][0]
-    return render_template('index.html', FOX=FOX, Time=time, CNN=CNN)
+    if 'username' in session:
+        print(session['username'])
+        print("Session appears to be activated")
+        return render_template('indexLoggedIn.html', FOX=FOX,Time=time,CNN=CNN)
+    else:
+        print("Session Inactive")
+        return render_template('index.html', FOX=FOX, Time=time, CNN=CNN)
+
+@app.route('/logout')
+def logout():
+    if 'username' in session:
+        session.pop('username', None)
+        return redirect(url_for('index_page'))
+    else:
+        return redirect(url_for('index_page'))
+
 
 @app.route('/hotline',methods=['GET'])
 def hotlines():
@@ -151,11 +171,15 @@ def testConnect():
 
 @app.route('/register', methods=['POST'])
 def register():
+    ## essentially, the hashed form of our password is being realll unreliable,
+    ## So, I'm gonna go ahead and change the methods for hashing to something dumber.
     print(request.form)
     regData = request.form
     username = regData['username']
     passwordInit = regData['password']
-    passwordHashed = generate_password_hash(passwordInit)
+    # passwordHashed = generate_password_hash(passwordInit)
+    h = hashlib.md5(passwordInit.encode())
+    passwordHashed = h.hexdigest()
     add_user = ("INSERT INTO newsUsers " "(username, passwordHashed) " "VALUES (" + "'" +str(username)+"','" + str(passwordHashed)+"')")
     print(add_user)
     data_user = (str(username), str(passwordHashed))
@@ -170,6 +194,29 @@ def register():
 @app.route('/login', methods=['POST'])
 def handleLogin():
     print(request.form)
+    loginData = request.form
+    username = loginData['username']
+    passwordInit = loginData['password']
+    queryUser = ("SELECT * FROM newsUsers WHERE username="+ "'"+username+"'")
+    print(queryUser)
+    cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+    cursor = cnx.cursor()
+    cursor.execute(queryUser)
+    hashTest = ""
+    for (passwordHashed) in cursor:
+        hashTest = passwordHashed
+    print(hashTest[2])
+    h = hashlib.md5(passwordInit.encode())
+    hashedPUser = h.hexdigest()
+    print(str(hashedPUser))
+    print(hashTest)
+    if (hashedPUser == str(hashTest[2])):
+        session['username'] = loginData['username']
+        print("fuck")
+        return redirect(url_for('index_page'))
+    else:
+        print("guess it didn't work!")
+        return(render_template('emptySearch.html'))
     return(render_template('emptySearch.html'))
 
 if __name__ == '__main__':
