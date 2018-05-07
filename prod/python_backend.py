@@ -62,6 +62,24 @@ def favorite():
     cnx.close()
     return render_template('favorites.html', results=favorites)
 
+@app.route('/favorites', methods=['GET', 'POST'])
+def unfavorite():
+    #User login error checking
+
+    #Database connection
+    cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+    cursor = cnx.cursor()
+
+    query = ("SELECT * FROM favorites WHERE url = website")
+    query2 = ("DELETE FROM favorites WHERE url = website")
+
+    cursor.execute(query)
+    for (newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title) in cursor:
+        favorites.remove(favoriteItem(newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title))
+    cursor.execute(query2)
+    cursor.close()
+    cnx.close()
+    return render_template('favorites.html', results=favorites)
 
 @app.route('/loginPage')
 def showLogin():

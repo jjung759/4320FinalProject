@@ -1,25 +1,30 @@
-<!DOCTYPE HTML5>
+<DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Login</title>
     <!-- Add links here -->
     <script src="jquery-3.3.1.min.js"></script>
+    <script src="PageJavaScript.js"></script>
     <link rel="stylesheet" type="text/css" href="PageCss.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <!-- Unsure about action.. will need to link to python somehow -->
     <form action="login" id="loginForm" method="post" action="{{url_for('handleLogin')}}">
         <div id="loginDiv" class="container">
             <label for="username"><b>Username: </b></label>
             <input type="text" id="username" name="username" placeholder="Enter Username" required>
             <br>
+
             <label for="password"><b>Password: </b></label>
             <input type="password" id="password" name="password" placeholder="Enter Password" required>
         </div>
+
         <button type="submit">Login</button>
     </form>
+
+    <a href="{{url_for('showRegister')}}">Register</a>
     <a href="{{url_for('index_page')}}">Return to Main Page</a>
+
 </body>
 </html>
