@@ -213,6 +213,7 @@ def handleLogin():
         return redirect(url_for('index_page'))
     else:
         print("guess it didn't work!")
+        feature/userTiedFavorites
         return redirect(url_for('showLogin'))
     return(render_template('emptySearch.html'))
 
