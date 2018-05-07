@@ -18,17 +18,17 @@
     {% for item in results %}
    <div class="pieceOfNews">
      <ul id="itemDetailList">
-       <li><a id="articleLink" href="{{ item.url|safe }}">{{item.title|safe}}</a></li>
+       <li><a id="articleLink" name="link" href="{{ item.url|safe }}">{{item.title|safe}}</a></li>
        <div class="articleDescript"> {{item.descriptions}} </div>
        <li>Source: {{item.newsSource}}</li>
        <li>Author: {{item.author}}</li>
        {%- if item.urlToImage -%}
        <img class="urlImage" src="{{item.urlToImage|safe}}"></img>
        {% endif %}
+       <br><button type='submit' action="unfavorite" method="post" action="{{ url_for('unfavorite') }}">Unfavorite</button> <br>
      </ul>
-     <form action="unfavorite" method="post" action="{{ url_for('unfavorite') }}">
-       <br><button type='submit'>Unfavorite</button> <br>
-     </form>
+     <!-- <form action="unfavorite" method="post" action="{{ url_for('unfavorite') }}"> -->
+     <!-- </form> -->
    </div>
    {% endfor %}
 

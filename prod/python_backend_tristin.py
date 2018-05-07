@@ -69,6 +69,8 @@ def unfavorite():
     #Database connection
     cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
     cursor = cnx.cursor()
+     
+    # url = request.form['link']
 
     query = ("DELETE FROM favorites WHERE url=url")
 
