@@ -28,7 +28,7 @@ function toggleSelected(number) {
     if (chk.checked == true && isEnlarged) {
         // If just checked true
         document.getElementById("text"+number).style.display = "block";
-        
+
     } else {
         // if just checked false
         document.getElementById("text"+number).style.display = "none";
@@ -57,11 +57,11 @@ checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
         items.classList.remove('visible');
         items.style.display = "none";
     }
-            
+
     else {
         items.classList.add('visible');
         items.style.display = "block";
-    }           
+    }
 }
 
 items.onblur = function(evt) {

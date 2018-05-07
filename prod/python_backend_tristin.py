@@ -62,7 +62,7 @@ def favorite():
     cnx.close()
     return render_template('favorites.html', results=favorites)
 
-@app.route('/favorites', methods=['GET', 'POST'])
+@app.route('/unfavorite', methods=['GET', 'POST'])
 def unfavorite():
     #User login error checking
 
@@ -70,12 +70,14 @@ def unfavorite():
     cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
     cursor = cnx.cursor()
 
-    query = ("DELETE FROM favorites WHERE url = website")
+    query = ("DELETE FROM favorites WHERE url=url")
 
     cursor.execute(query)
+    # This will need to be uncommented eventually but I am going to leave it out for now so I dont have to re add the favorite entry each time
+    #cnx.commit()
     cursor.close()
     cnx.close()
-    return render_template('favorites.html', results=favorites)
+    return render_template('favorites.html')
 
 @app.route('/loginPage')
 def showLogin():

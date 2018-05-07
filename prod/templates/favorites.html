@@ -25,8 +25,10 @@
        {%- if item.urlToImage -%}
        <img class="urlImage" src="{{item.urlToImage|safe}}"></img>
        {% endif %}
-       <br><button type='submit'>Unfavorite</button> </br>
      </ul>
+     <form action="unfavorite" method="post" action="{{ url_for('unfavorite') }}">
+       <br><button type='submit'>Unfavorite</button> <br>
+     </form>
    </div>
    {% endfor %}
 
