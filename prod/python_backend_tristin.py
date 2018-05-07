@@ -71,15 +71,21 @@ def unfavorite():
     cursor = cnx.cursor()
 
     # url = request.form['link']
+    favorites = []
 
-    query = ("DELETE FROM favorites WHERE url='https://www.google.com'")
+    query = ("DELETE FROM favorites WHERE url=url")
+    query2 = ("SELECT * FROM favorites WHERE userID = 1")
 
     cursor.execute(query)
     # This will need to be uncommented eventually but I am going to leave it out for now so I dont have to re add the favorite entry each time
-    #cnx.commit()
+    # cnx.commit()
+
+    cursor.execute(query2)
+    for (newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title) in cursor:
+        favorites.append(favoriteItem(newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title))
     cursor.close()
     cnx.close()
-    return render_template('favorites.html')
+    return render_template('favorites.html', results=favorites)
 
 @app.route('/loginPage')
 def showLogin():
