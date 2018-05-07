@@ -44,29 +44,26 @@ class favoriteItem():
 
 @app.route('/favorites', methods=['GET', 'POST'])
 def favorite():
-
-    # Check if the user is logged in first:
-        # if not logged in, redirect to login page
-        # if logged in, continue
-
-    # connect to the database
-    cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
-    cursor = cnx.cursor()
-
-    # empty array of favorites to populate with the query
-    favorites = []
-
-    # Using id of 1 to test
-    query = ("SELECT * FROM favorites WHERE userID = 1")
-
-    cursor.execute(query)
-    for (newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title) in cursor:
-        favorites.append(favoriteItem(newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title))
-        #print ("{}, {} is working! the author is {}.".format(newsSource, userID, author))
-    cursor.close()
-    cnx.close()
-    return render_template('favorites.html', results=favorites)
-
+    if 'username' in session:
+        cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+        cursor = cnx.cursor()
+        # empty array of favorites to populate with the query
+        favorites = []
+        queryUser = ("SELECT * FROM newsUsers WHERE username="+ "'"+session['username']+"'")
+        cursor.execute(queryUser)
+        for (userID) in cursor:
+            uid =  userID
+        print(uid)
+        print(uid[0])
+        query = ("SELECT * FROM favorites WHERE userID =" + "'"+str(uid[0])+"'")
+        cursor.execute(query)
+        for (newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title) in cursor:
+            favorites.append(favoriteItem(newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title))
+        cursor.close()
+        cnx.close()
+        return render_template('favorites.html', results=favorites)
+    else:
+        return redirct(url_for('showLogin'))
 
 @app.route('/loginPage')
 def showLogin():
@@ -216,7 +213,8 @@ def handleLogin():
         return redirect(url_for('index_page'))
     else:
         print("guess it didn't work!")
-        return(render_template('emptySearch.html'))
+        feature/userTiedFavorites
+        return redirect(url_for('showLogin'))
     return(render_template('emptySearch.html'))
 
 if __name__ == '__main__':
