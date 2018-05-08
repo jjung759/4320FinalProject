@@ -6,6 +6,7 @@ from flask import redirect, url_for
 from wtforms import Form, StringField, SelectField
 from newsapi import newsapi_client
 from news    import News
+from datetime import datetime
 from werkzeug.security import generate_password_hash,  check_password_hash
 import mysql.connector as db
 import os
@@ -63,7 +64,21 @@ def favorite():
         cnx.close()
         return render_template('favorites.html', results=favorites)
     else:
-        return redirct(url_for('showLogin'))
+        return redirect(url_for('showLogin'))
+
+@app.route('/unfavorite', methods=['GET', 'POST'])
+def unfavorite(url):
+    #User login error checking
+    if 'username' in session:
+        #Database connection
+        ##Should modify this so that deletion is based off of title//userID
+        cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+        cursor = cnx.cursor()
+        query = ("DELETE FROM favorites WHERE url = 'url'")
+        cursor.execute(query)
+        cursor.close()
+        cnx.close()
+        return render_template('favorites.html')
 
 @app.route('/loginPage')
 def showLogin():
@@ -139,6 +154,8 @@ def search():
     if len(selectedSources) == 0: ## case where no sources selected
         newsItems = apikey.get_everything(q=str(query), language='en', sort_by='relevancy')
         articleListing = newsItems['articles']
+        if 'username' in session:
+            return(render_template('searchLoggedIn.html', results=articleListing))
         return(render_template('search.html', results=articleListing))
     else:
         sourcesStr = ""
@@ -150,10 +167,14 @@ def search():
             sourcesStr = sourcesStr + selectedSources[finalIndex]
             newsItems = apikey.get_everything(q=str(query), sources=str(sourcesStr), language='en', sort_by='relevancy')
             articleListing = newsItems['articles']
+            if 'username' in session:
+                return(render_template('searchLoggedIn.html', results=articleListing))
             return(render_template('search.html', results=articleListing)) ## Initially just testing to see what gets rendered on form submit atm:
         else:
             newsItems = apikey.get_everything(q=str(query), sources=str(selectedSources[0]), language='en', sort_by='relevancy')
             articleListing = newsItems['articles']
+            if 'username' in session:
+                return(render_template('searchLoggedIn.html', results=articleListing))
             return(render_template('search.html', results=articleListing))
 
 #    return render_template('index.html',form=_topic)
@@ -190,6 +211,7 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def handleLogin():
+    print("What the fuck");
     print(request.form)
     loginData = request.form
     username = loginData['username']
@@ -207,6 +229,7 @@ def handleLogin():
     hashedPUser = h.hexdigest()
     print(str(hashedPUser))
     print(hashTest)
+    print(str(hashTest[2]))
     if (hashedPUser == str(hashTest[2])):
         session['username'] = loginData['username']
         print("fuck")
@@ -215,6 +238,36 @@ def handleLogin():
         print("guess it didn't work!")
         return redirect(url_for('showLogin'))
     return(render_template('emptySearch.html'))
+
+@app.route('/addFavorite', methods=['POST'])
+def addFavorite():
+    ## to do --> Parse post request of article info, get UsersID, make sql query inserting article info & userID
+    favoritedInfo = request.form
+    print(favoritedInfo)
+    title = favoritedInfo['title']
+    author = favoritedInfo['author']
+    source = favoritedInfo['newsSource']
+    descrip = favoritedInfo['description']
+    favDate = favoritedInfo['favoriteDate']
+    imgUrl = favoritedInfo['imageURL']
+    url = favoritedInfo['url']
+    username = session['username']
+    queryUserID = ("SELECT id FROM newsUsers WHERE username="+ "'"+username+"'")
+    cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
+    cursor = cnx.cursor()
+    cursor.execute(queryUserID)
+    idT = 0
+    for (id) in cursor:
+        idT = id
+    uid = idT[0] #userID to insert into table
+    add_fav = ("INSERT INTO favorites " "(newsSource, userID, favoriteDate, author, descriptions, url, imageURL, title) " "VALUES ("
+    + "'" +str(source)+"'," + str(uid) + ",NOW()"+ ",'" + str(author) + "','" + descrip + "','" + url + "','" + imgUrl + "','" + title +"')")
+    print(add_fav);
+    cursor.execute(add_fav)
+    cnx.commit()
+    cursor.close()
+    cnx.close()
+    return str(favoritedInfo)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
