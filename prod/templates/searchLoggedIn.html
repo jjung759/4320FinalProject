@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Results</title>
+
+  <script src="{{url_for('static', filename='scripts/jquery-3.3.1.min.js')}}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PageCss.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='search.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style>
+    #starClick{
+      top: 30%;
+      position: relative;
+      left: 5%;
+    }
+    .starClick{
+      top: 30%;
+      position: relative;
+      left: 5%;
+    }
+    #favBlock{
+      display: inline-block;
+      margin-top: -15%;
+      margin-left: 75%;
+    }
+    #favOnly{
+      position: relative;
+      margin-top: -5;
+      margin-top: -2%;
+      left: 83.5%;
+    }
+  </style>
+  <script>
+    function favorite(idx){
+      selectorStr = "#item_" + idx;
+      starStr = "#starClick_" + idx;
+      list = $(selectorStr).children("#itemDetailList").html();
+      console.log(list);
+      title = $(list).children("#articleLink").html();
+      url = $(list).children("#articleLink").prop('href');
+      descrip = $(list).children("#articleDescript").html();
+      source = $(list).children("#source").html();
+      author = $(list).children("#author").html();
+      favoritesBlock = $(list).children("#favBlock");
+      console.log(favoritesBlock);
+      favDate = Date.now();
+      console.log(favDate);
+      imgSrc = $(favoritesBlock).children("#displayedImg").prop('src');
+      $.post("{{url_for('addFavorite')}}", {title: title, favoriteDate: favDate, author: author, description: descrip, url: url, imageURL: imgSrc, newsSource: source}).done(function(data){
+        selected = '#glypi-star_' + idx;
+        $(selected).removeClass("glyphicon-star-empty").addClass("glypicon-ok")
+      });
+    }
+  </script>
+  </head>
+  <body>
+    <div id="headertop">
+    <form class="searchForm" id="searchBar" method="post" action="{{ url_for('search') }}">
+        <input type="text" id= placeholder="Search..." name="queryString">
+        <!-- May have to be changed to type submit -->
+
+        <button type="submit" onclick="enlarge()"><i class="fa fa-search"></i></button>
+        <div id="sourcelist" class="dropdown-check-list" tabindex="100">
+            <span class="anchor">Display From Sources...</span>
+            <ul id="items" class="items">
+                <li><input type="checkbox" id="check1" name="ABC" onclick="toggleSelected(1)"/>ABC News</li>
+                <li><input type="checkbox" id="check2" name="BBC" onclick="toggleSelected(2)"/>BBC News</li>
+                <li><input type="checkbox" id="check3" name="CBS" onclick="toggleSelected(3)"/>CBS News</li>
+                <li><input type="checkbox" id="check4" name="CNN" onclick="toggleSelected(4)"/>CNN News</li>
+                <li><input type="checkbox" id="check5" name="ESPN" onclick="toggleSelected(5)"/>ESPN News</li>
+                <li><input type="checkbox" id="check6" name="FOX" onclick="toggleSelected(6)"/>FOX News</li>
+                <li><input type="checkbox" id="check7" name="NBC" onclick="toggleSelected(7)"/>NBC News</li>
+                <li><input type="checkbox" id="check8" name="NYT" onclick="toggleSelected(8)"/>New York Times</li>
+                <li><input type="checkbox" id="check9" name="WSJ" onclick="toggleSelected(9)"/>Wall Street Journal</li>
+                <li><input type="checkbox" id="check10" name="WAPO" onclick="toggleSelected(10)"/>Washington Post</li>
+            </ul>
+        </div>
+    </form>
+    <div id="article-selection">
+        <p id="text1" class="noDisplay">Display a ABC News article!</p>
+        <p id="text2" class="noDisplay">Display a BBC News article!</p>
+        <p id="text3" class="noDisplay">Display a CBS article!</p>
+        <p id="text4" class="noDisplay">Display a CNN article!</p>
+        <p id="text5" class="noDisplay">Display a ESPN article!</p>
+        <p id="text6" class="noDisplay">Display a Fox News article!</p>
+        <p id="text7" class="noDisplay">Display a NBC News article!</p>
+        <p id="text8" class="noDisplay">Display a New York Times article!</p>
+        <p id="text9" class="noDisplay">Display a Wall Street Journal article!</p>
+        <p id="text10" class="noDisplay">Display a Washington Post article!</p>
+    </div>
+</div>
+<!-- Rendering for each news item in results of API query -->
+  {% for item in results %}
+    <div class="pieceOfNews" id="item_{{loop.index}}">
+      <ul id="itemDetailList">
+        <li><a id="articleLink" href="{{ item.url|safe }}">{{item.title|safe}}</a></li>
+        <li><div id="articleDescript" class="articleDescript"> {{item.description}} </div></li>
+        <li>Source: <b id="source">{{item.source.name}}</b></li>
+        <li>Author: <b id="author">{{item.author}}</b></li>
+        <li>
+          {%- if item.urlToImage -%}
+          <div id="favBlock">
+            <img id="displayedImg" class="urlImage" src="{{item.urlToImage|safe}}"></img>
+            <button class="starClick" id="starClick_{{loop.index}}" type="button" class="btn btn-default" onclick="favorite({{loop.index}})">
+              <span id="glypi-star_{{loop.index}}" class="glyphicon glyphicon-star-empty">
+            </button>
+          </div>
+          {% else %}
+          <div id="favBlock">
+            <div id="displayedImg" class="urlImage"></div>
+            <button class="starClick" id="starClick{_{loop.index}}" type="button" class="btn btn-default" onclick="favorite({{loop.index}})">
+              <span id="glypi-star" class="glyphicon glyphicon-star-empty">
+            </button>
+          </div>
+          {% endif %}
+      </ul>
+    </div>
+  {% endfor %}
+<!-- If this script is not down here, then certain elements cannot be found. Unlucky -->
+<script src="{{url_for('static', filename='scripts/PageJavaScript.js')}}"></script>
+  </body>
+</html>
