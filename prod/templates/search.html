@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+    <br><span> <a href="{{url_for('index_page')}}">Return to main</a></span> <br>
     <div id="headertop">
     <form class="searchForm" id="searchBar" method="post" action="{{ url_for('search') }}">
         <input type="text" id= placeholder="Search..." name="queryString">
