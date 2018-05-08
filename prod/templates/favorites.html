@@ -3,16 +3,42 @@
 <head>
     <meta charset="utf-8">
     <title>Your favorites</title>
-    <script src="jquery-3.3.1.min.js"></script>
+    <script src="{{url_for('static', filename='scripts/jquery-3.3.1.min.js')}}"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PageCss.css')}}"></head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='search.css')}}">
-
-    <!-- Bootstrap elements for unfavoriting, use in display of articles too
-https://getbootstrap.com/docs/3.3/components/#glyphicons-examples
--->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+    <style>
+      #starClick{
+        top: 30%;
+        position: relative;
+        left: 5%;
+      }
+        top: 30%;
+        .starClick{
+        position: relative;
+        left: 5%;
+      }
+      #favBlock{
+        display: inline-block;
+        margin-top: -15%;
+        margin-left: 75%;
+      }
+      #favOnly{
+        position: relative;
+        margin-top: -5;
+        margin-top: -2%;
+        left: 83.5%;
+      }
+    </style>
+    <script>
+      function unfavorite(idx){
+        selectorStr = "#item_" + idx;
+        list = $(selectorStr).children("#itemDetailList").html();
+        url = $(list).children("#articleLink").prop('href');
+        $.post("{{url_for('unfavorite')}}", {url: url});
+        $(selectorStr).remove();
+      }
+    </script>
 <body>
 
     <!-- Not sure how to check if logged in or not via python(?) serverside -->
@@ -22,18 +48,23 @@ https://getbootstrap.com/docs/3.3/components/#glyphicons-examples
     <span id="login-message-fav"><a href="{{url_for('showLogin')}}">Log in or create an account</a> to view your favorites.</span>
 
     {% for item in results %}
-   <div class="pieceOfNews">
+   <div class="pieceOfNews" id="item_{{loop.index}}">
      <ul id="itemDetailList">
-       <li><a id="articleLink" href="{{ item.url|safe }}">{{item.title|safe}}</a></li>
+       <li><a id="articleLink" name="link" href="{{ item.url|safe }}">{{item.title|safe}}</a></li>
        <div class="articleDescript"> {{item.descriptions}} </div>
        <li>Source: {{item.newsSource}}</li>
        <li>Author: {{item.author}}</li>
        {%- if item.urlToImage -%}
-       <img class="urlImage" src="{{item.urlToImage|safe}}"></img>
+       <div id="favBlock">
+         <img id="displayedImg" class="urlImage" src="{{item.imageURL|safe}}"></img>
+         <button onclick="unfavorite({{loop.index}})">Unfavorite</button>
+       </div>
+       {% else %}
+       <div id="favBlock">
+         <div id="displayedImg" class="urlImage"></div>
+         <button onclick="unfavorite({{loop.index}})">Unfavorite</button>
+       </div>
        {% endif %}
-       <button type="button" class="btn btn-default">
-           <span class="glyphicon glyphicon-remove">
-       </button>
      </ul>
    </div>
    {% endfor %}

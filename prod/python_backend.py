@@ -7,6 +7,7 @@ from wtforms import Form, StringField, SelectField
 from newsapi import newsapi_client
 from news    import News
 from datetime import datetime
+import re
 from werkzeug.security import generate_password_hash,  check_password_hash
 import mysql.connector as db
 import os
@@ -67,15 +68,26 @@ def favorite():
         return redirect(url_for('showLogin'))
 
 @app.route('/unfavorite', methods=['GET', 'POST'])
-def unfavorite(url):
+def unfavorite():
     #User login error checking
     if 'username' in session:
         #Database connection
         ##Should modify this so that deletion is based off of title//userID
+        url = request.form['url']
+        ## Get UserID
+        username = session['username']
+        queryUserID = ("SELECT id FROM newsUsers WHERE username="+ "'"+username+"'")
         cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
         cursor = cnx.cursor()
-        query = ("DELETE FROM favorites WHERE url = 'url'")
+        cursor.execute(queryUserID)
+        idT = 0
+        for (id) in cursor:
+            idT = id
+        uid = idT[0] #userID to insert into table
+        query = "DELETE FROM favorites WHERE userID=" + str(uid) + " AND url='" + str(url) + "'"
+        print(query)
         cursor.execute(query)
+        cnx.commit()
         cursor.close()
         cnx.close()
         return render_template('favorites.html')
@@ -236,7 +248,6 @@ def handleLogin():
         return redirect(url_for('index_page'))
     else:
         print("guess it didn't work!")
-        feature/userTiedFavorites
         return redirect(url_for('showLogin'))
     return(render_template('emptySearch.html'))
 
@@ -253,6 +264,7 @@ def addFavorite():
     imgUrl = favoritedInfo['imageURL']
     url = favoritedInfo['url']
     username = session['username']
+    # descrip = re.escape(descrip)
     queryUserID = ("SELECT id FROM newsUsers WHERE username="+ "'"+username+"'")
     cnx = db.connect(user='groupmem', password='password', host='localhost', database='finalProj')
     cursor = cnx.cursor()
